@@ -1,0 +1,27 @@
+# Flutter generated files
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+
+# Android generated files
+.gradle/
+build/
+app/build/
+captures/
+local.properties
+*.iml
+
+# iOS generated files
+ios/Flutter/flutter_export_environment.sh
+ios/Pods/
+ios/Runner.xcworkspace/
+
+# Other
+/.idea/
+/android/.idea/
+/*.apk
+*.keystore
+*.jks
