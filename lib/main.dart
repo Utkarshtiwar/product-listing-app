@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:product_listing/presentation/screen/Splash_Screen.dart';
 import 'package:product_listing/presentation/screen/login_screen.dart';
 import 'package:product_listing/state/cart_controller.dart';
 import 'core/routes/app_router.dart';
