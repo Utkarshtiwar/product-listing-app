@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../../data/model/product_model.dart';
 import '../../presentation/screen/Cart_screen.dart';
+import '../../presentation/screen/Splash_Screen.dart';
 import '../../presentation/screen/login_screen.dart';
 import '../../presentation/screen/product_detail_screen.dart';
 import '../../presentation/screen/product_list_screen.dart';
@@ -38,6 +39,12 @@ class AppRouter {
       name: login,
       page: () => LoginScreen(),
       transition: Transition.rightToLeftWithFade,
+      transitionDuration: Duration(milliseconds: 350)
+    ),
+    GetPage(
+        name: splash,
+        page: () => SplashScreen(),
+      transition: Transition.fade,
       transitionDuration: Duration(milliseconds: 350)
     )
   ];

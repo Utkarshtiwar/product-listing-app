@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:product_listing/presentation/screen/login_screen.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../core/routes/app_router.dart';
 import 'product_list_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Timer(const Duration(seconds: 4), () {
-      Get.off(() => const ProductListScreen());
+      Get.offAllNamed(AppRouter.login);
     });
   }
 
