@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:product_listing/state/loginController.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
-  final TextEditingController idController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  LoginController controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +20,7 @@ class LoginScreen extends StatelessWidget {
         height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF74EBD5),
-              Color(0xFFACB6E5),
-            ],
+            colors: [Color(0xFF74EBD5), Color(0xFFACB6E5)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -38,7 +41,6 @@ class LoginScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
 
-                  /// Heading
                   const Text(
                     "Welcome Back 👋",
                     style: TextStyle(
@@ -52,7 +54,7 @@ class LoginScreen extends StatelessWidget {
 
                   /// ID field
                   TextField(
-                    controller: idController,
+                    controller: controller.emailController,
                     decoration: InputDecoration(
                       hintText: "Enter ID",
                       filled: true,
@@ -62,7 +64,9 @@ class LoginScreen extends StatelessWidget {
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 14),
+                        horizontal: 18,
+                        vertical: 14,
+                      ),
                     ),
                   ),
 
@@ -70,7 +74,7 @@ class LoginScreen extends StatelessWidget {
 
                   /// Password field
                   TextField(
-                    controller: passwordController,
+                    controller: controller.passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: "Enter Password",
@@ -81,31 +85,64 @@ class LoginScreen extends StatelessWidget {
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 14),
+                        horizontal: 18,
+                        vertical: 14,
+                      ),
                     ),
                   ),
 
                   const SizedBox(height: 24),
 
                   /// Login Button
-                  ElevatedButton(
-                    onPressed: () {
-
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black87,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
+                  Obx(() {
+                    return ElevatedButton(
+                      onPressed: controller.isLoading.value?null:(){
+                        final email = controller.emailController.text.trim();
+                        final password = controller.passwordController.text.trim();
+                        print(email);
+                        print(password);
+                        if (email.isEmpty || password.isEmpty) {
+                          Get.snackbar("Error", "Please enter both fields");
+                          return;
+                        }
+                        controller.login(email, password);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black87,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
                       ),
-                    ),
-                    child: const Text(
-                      "Login",
-                      style: TextStyle(fontSize: 16),
+                      child: controller.isLoading.value
+                          ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                          : const Text("Login", style: TextStyle(fontSize: 16)),
+                    );
+                  }),
+                  const SizedBox(height: 8),
+                  Text("Forgot Password?"),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                  Text("New User?"),
+                  Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
+                    ]
+                  )
                 ],
               ),
             ),
